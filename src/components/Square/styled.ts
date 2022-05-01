@@ -10,7 +10,7 @@ export const Square = styled.div<{isOverlined: boolean, isChecked: boolean}>`
   overflow: hidden;
 
   text-decoration: ${props => props.isOverlined && 'overline'};
-  background-color: ${props => props.isChecked && 'gray'};
+  background-color: ${props => props.isChecked && '#bcb7b9'};
   outline: 1px solid black;
   padding: 1px;
 `
@@ -25,7 +25,7 @@ export const S = styled(OutlinedSpan)`
   
   width: 47px;
   height: 47px;
-  border: 1px solid blue;
+  border: 1px solid #0037ff;
   /* background-color: blue; */
   z-index: 1;
 
@@ -36,7 +36,7 @@ export const S = styled(OutlinedSpan)`
 
   ${props => props.ended === Ended.Bottom &&
   css`
-    top: -3px;
+    top: -4px;
     height: 100%;
   `}
 
@@ -47,7 +47,7 @@ export const S = styled(OutlinedSpan)`
 
   ${props => props.ended === Ended.Right &&
   css`
-    left: -3px;
+    left: -4px;
     width: 100%;
   `}
 
@@ -62,7 +62,7 @@ export const X = styled(OutlinedSpan)`
     
   width: 39px;
   height: 39px;
-  border: 1px solid red;
+  border: 1px solid #ff003b;
   /* background-color: red; */
   z-index: 2;
 
@@ -97,8 +97,7 @@ export const M = styled(OutlinedSpan)`
     
   width: 33px;
   height: 33px;
-  border: 1px solid yellow;
-  /* background-color: yellow; */
+  border: 1px solid #fbff00;
 
   z-index: 3;
 
@@ -133,7 +132,7 @@ export const L = styled(OutlinedSpan)`
     
   width: 27px;
   height: 27px;
-  border: 1px solid green;
+  border: 1px solid #00ff09;
   /* background-color: green; */
 
   z-index: 4;
@@ -160,3 +159,7 @@ export const L = styled(OutlinedSpan)`
     width: 100%;
   `}
   `
+
+export const SquareContent = styled.p`
+  text-align: center;
+`

@@ -11,8 +11,6 @@ type Props = {
   fieldValues: any
 }
 const KarnoCardsField: FC<Props> = ({ currentCount, fieldValues }) => {
-  // const [fieldValues, setFieldValues] = useState(fields)
-  // console.log('f', fieldValues, currentCount)
 
   const hasConnection = (vert1: string, vert2: string, endedOption: Ended) => {
     if (vert1 === '1' && vert2 === '1') {
@@ -22,13 +20,8 @@ const KarnoCardsField: FC<Props> = ({ currentCount, fieldValues }) => {
     }
   }
 
-  // useEffect(() => {
-    
-  //   setFieldValues(fields)
-  // }, [currentCount])
-
-  // const
   return (
+    <>
     <SC.KarnoCardsField>
       <SC.ColumnWrapper>
         <Square />
@@ -40,7 +33,7 @@ const KarnoCardsField: FC<Props> = ({ currentCount, fieldValues }) => {
         <Square content={'X2'} />
         <Square
           isChecked={currentCount === '3' ? fieldValues[`fieldBy3-8`] === '1' : fieldValues['fieldBy2-4'] === '1'}
-          ended={{
+          ended={currentCount === '3' ?{
             L: hasConnection(
               fieldValues[`fieldBy3-8`],
               fieldValues[`fieldBy3-7`],
@@ -56,10 +49,23 @@ const KarnoCardsField: FC<Props> = ({ currentCount, fieldValues }) => {
               fieldValues[`fieldBy3-4`],
               Ended.Top
             )
-          }}
+          }
+         : 
+        {
+          L: hasConnection(
+            fieldValues[`fieldBy2-4`],
+            fieldValues[`fieldBy2-2`],
+            Ended.Top
+          ),
+          S: hasConnection(
+            fieldValues[`fieldBy2-4`],
+            fieldValues[`fieldBy2-3`],
+            Ended.Left
+          )
+        }}
         />
         <Square
-          ended={{
+          ended={currentCount === '3' ?{
             L: hasConnection(
               fieldValues[`fieldBy3-2`],
               fieldValues[`fieldBy3-4`],
@@ -75,7 +81,19 @@ const KarnoCardsField: FC<Props> = ({ currentCount, fieldValues }) => {
               fieldValues[`fieldBy3-4`],
               Ended.Right
             )
-          }}
+          }
+        : {
+          L: hasConnection(
+            fieldValues[`fieldBy2-4`],
+            fieldValues[`fieldBy2-2`],
+            Ended.Bottom
+          ),
+          M: hasConnection(
+            fieldValues[`fieldBy2-2`],
+            fieldValues[`fieldBy2-1`],
+            Ended.Left
+          )
+        }}
           isChecked={currentCount === '3' ? fieldValues[`fieldBy3-4`] === '1' :fieldValues['fieldBy2-2'] === '1'}
         />
       </SC.ColumnWrapper>
@@ -83,7 +101,7 @@ const KarnoCardsField: FC<Props> = ({ currentCount, fieldValues }) => {
       <SC.ColumnWrapper>
         <Square isOverlined content={'X2'} />
         <Square
-          ended={{
+          ended={currentCount === '3' ?{
             M: hasConnection(
               fieldValues[`fieldBy3-2`],
               fieldValues[`fieldBy3-6`],
@@ -99,11 +117,22 @@ const KarnoCardsField: FC<Props> = ({ currentCount, fieldValues }) => {
               fieldValues[`fieldBy3-6`],
               Ended.Right
             )
+          } : {
+            S: hasConnection(
+              fieldValues[`fieldBy2-4`],
+              fieldValues[`fieldBy2-3`],
+              Ended.Right
+            ),
+            X: hasConnection(
+              fieldValues[`fieldBy2-1`],
+              fieldValues[`fieldBy2-3`],
+              Ended.Top
+            )
           }}
           isChecked={currentCount === '3' ? fieldValues[`fieldBy3-6`] === '1': fieldValues['fieldBy2-3'] === '1'}
         />
         <Square
-          ended={{
+          ended={currentCount === '3' ?{
             L: hasConnection(
               fieldValues[`fieldBy3-2`],
               fieldValues[`fieldBy3-4`],
@@ -118,6 +147,17 @@ const KarnoCardsField: FC<Props> = ({ currentCount, fieldValues }) => {
               fieldValues[`fieldBy3-2`],
               fieldValues[`fieldBy3-1`],
               Ended.Left
+            )
+          } : {
+            M: hasConnection(
+              fieldValues[`fieldBy2-2`],
+              fieldValues[`fieldBy2-1`],
+              Ended.Right
+            ),
+            X: hasConnection(
+              fieldValues[`fieldBy2-1`],
+              fieldValues[`fieldBy2-3`],
+              Ended.Bottom
             )
           }}
           isChecked={currentCount === '3' ? fieldValues[`fieldBy3-2`] === '1' : fieldValues['fieldBy2-1'] === '1' }
@@ -216,6 +256,11 @@ const KarnoCardsField: FC<Props> = ({ currentCount, fieldValues }) => {
         </>
       )}
     </SC.KarnoCardsField>
+      {currentCount === '3' && <SC.AdditionalFieldsWrapper>
+        <SC.AdditionalField>X3</SC.AdditionalField>
+        <SC.AdditionalField isOverlined>X3</SC.AdditionalField>
+        </SC.AdditionalFieldsWrapper>}
+      </>
   )
 }
 

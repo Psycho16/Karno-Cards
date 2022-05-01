@@ -1,5 +1,5 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { DeepMap, FieldError, useForm } from 'react-hook-form'
 
 import ContentContainer from '../../components/ContentContainer'
 import DropdownMenu from '../../components/DropdownMenu'
@@ -41,7 +41,7 @@ const IndexPage = () => {
 
   const [formData, setFormData] = React.useState({})
 
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit, formState: { errors } } = useForm()
 
   const CustomSetCurrentCount = (item: { id: string; value: string }) => {
     setCurrentCount(item)
@@ -50,54 +50,81 @@ const IndexPage = () => {
     setFormData(formData)
   }
 
+  const onError = (errors: DeepMap<any, FieldError>) => {
+    const errorsArray: FieldError[] = Object.values(errors)
+    // eslint-disable-next-line no-console
+    console.log( Object.keys(errors).includes(`fieldBy${currentCount.id}-${0 + 1}`))
+    // eslint-disable-next-line no-console
+    console.error(errors)
+  }
+
+  const useFunctionInput = () => {
+  
+    return {
+      required: 'Это обязательное поле',
+      min: {
+        value: 0,
+        message: 'Минимальное значение должно быть не меньше нуля'
+      },
+      max: {
+        value: 1,
+        message: 'Максимальное значение должно быть не больше единицы'
+      }
+    }
+  }
+
+  const functionInputRules = useFunctionInput()
+
   return (
     <ContentContainer>
       <SC.ContentWrapper>
-      <SC.ColumnWrapper>
-        <SC.PopupWrapper>
-          <SC.PopupLabel>Введите количество переменных</SC.PopupLabel>
-          <DropdownMenu
-            items={[
-              { id: '2', value: '2' },
-              { id: '3', value: '3' }
-            ]}
-            setItem={CustomSetCurrentCount}
-            selectedItem={currentCount}
-          />
-        </SC.PopupWrapper>
-
-        <SC.RowWrapper>
-          {defaultArr[currentCount.id].map((item: number) => (
-            <TableTruthColumn
-              key={item}
-              currentIndex={item}
-              values={defaultValues[currentCount.id][item]}
+        <SC.ColumnWrapper>
+          <SC.PopupWrapper>
+            <SC.PopupLabel>Выберите количество переменных</SC.PopupLabel>
+            <DropdownMenu
+              items={[
+                { id: '2', value: '2' },
+                { id: '3', value: '3' }
+              ]}
+              setItem={CustomSetCurrentCount}
+              selectedItem={currentCount}
             />
-          ))}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <SC.InputsWrapper>
-              <div className={'table-title'}>F(0 или 1)</div>
-              {Array(inputsCount[currentCount.id])
-                .fill(0)
-                .map((item, index) => (
-                  <SC.Input
-                    key={Math.random()}
-                    {...register(`fieldBy${currentCount.id}-${index + 1}`, {
-                      required: 'er',
-                      min: 0,
-                      max: 1
-                    })}
-                  />
-                ))}
-            </SC.InputsWrapper>
-            <button>Нажать</button>
-          </form>
-        </SC.RowWrapper>
-      </SC.ColumnWrapper>
+          </SC.PopupWrapper>
 
-      <SC.ColumnWrapper>
-        <KarnoCardsField currentCount={currentCount.id} fieldValues={formData}/>
-      </SC.ColumnWrapper>
+          <SC.RowWrapper>
+            {defaultArr[currentCount.id].map((item: number) => (
+              <TableTruthColumn
+                key={item}
+                currentIndex={item}
+                values={defaultValues[currentCount.id][item]}
+              />
+            ))}
+            <form onSubmit={handleSubmit(onSubmit, onError)}>
+              <SC.InputsWrapper>
+                <div className={'table-title'}>F(0 или 1)</div>
+                {Array(inputsCount[currentCount.id])
+                  .fill(0)
+                  .map((item, index) => (
+                    <SC.Input
+                      key={Math.random()}
+                      // hasError={Object.keys(errors).includes(`fieldBy${currentCount.id}-${index + 1}`)}
+                      {...register(`fieldBy${currentCount.id}-${index + 1}`, functionInputRules)}
+                    />
+                  ))}
+              </SC.InputsWrapper>
+              <SC.Button>Нарисовать карту карно</SC.Button>
+              {/* {Object.keys(errors).length > 0
+               && <SC.Span>{'Проверьте, что все поля заполнены и входят в диапазон от 0 до 1'}</SC.Span>} */}
+            </form>
+          </SC.RowWrapper>
+        </SC.ColumnWrapper>
+
+        <SC.ColumnWrapper>
+          <KarnoCardsField
+            currentCount={currentCount.id}
+            fieldValues={formData}
+          />
+        </SC.ColumnWrapper>
       </SC.ContentWrapper>
     </ContentContainer>
   )

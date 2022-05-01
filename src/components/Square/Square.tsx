@@ -12,14 +12,14 @@ export enum Ended {Top = "Top", Left = "Left", Right = "Right", Bottom = "Bottom
 
 type Props = {
   content?: string
-    isOverlined?: boolean
-    isChecked?: boolean
-    ended?: {
-      S?: Ended,
-      X?: Ended,
-      M?: Ended,
-      L?: Ended
-    }
+  isOverlined?: boolean
+  isChecked?: boolean
+  ended?: {
+    S?: Ended,
+    X?: Ended,
+    M?: Ended,
+    L?: Ended
+  }
 }
 const Square:FC<Props> = ({content, isOverlined = false, isChecked = false, ended}) => {
   // console.log(isChecked)
@@ -30,11 +30,7 @@ const Square:FC<Props> = ({content, isOverlined = false, isChecked = false, ende
       {ended && ended.X && <SC.X ended={ended.X}/>}
       {ended && ended.M && <SC.M ended={ended.M}/>}
       {ended && ended.L && <SC.L ended={ended.L}/>}
-      {/* <SC.S/>
-      <SC.X/>
-      <SC.M/>
-      <SC.L/> */}
-      <p>{content}</p>
+      <SC.SquareContent>{content}</SC.SquareContent>
     </SC.Square>
   )
 }
