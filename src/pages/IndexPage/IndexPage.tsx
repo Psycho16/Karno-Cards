@@ -4,8 +4,10 @@ import { DeepMap, FieldError, useForm } from 'react-hook-form'
 import ContentContainer from '../../components/ContentContainer'
 import DropdownMenu from '../../components/DropdownMenu'
 import TableTruthColumn from '../../components/TableTruthColumn/TableTruthColumn'
-import Square from '../../components/Square'
 import KarnoCardsField from '../../components/KarnoCardsField'
+import Square, { Ended } from '../../components/Square/Square'
+import Square2 from '../../components/Square2'
+import KarnoCardsFieldSmall from '../../components/KarnoCardsSmall/KarnoCardsField/KarnoCardsFieldSmall'
 
 import * as SC from './styled'
 
@@ -41,7 +43,7 @@ const IndexPage = () => {
 
   const [formData, setFormData] = React.useState({})
 
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit } = useForm()
 
   const CustomSetCurrentCount = (item: { id: string; value: string }) => {
     setCurrentCount(item)
@@ -50,16 +52,12 @@ const IndexPage = () => {
     setFormData(formData)
   }
 
-  const onError = (errors: DeepMap<any, FieldError>) => {
-    const errorsArray: FieldError[] = Object.values(errors)
-    // eslint-disable-next-line no-console
-    console.log( Object.keys(errors).includes(`fieldBy${currentCount.id}-${0 + 1}`))
-    // eslint-disable-next-line no-console
-    console.error(errors)
-  }
+  // const onError = (errors: DeepMap<any, FieldError>) => {
+  //   // eslint-disable-next-line no-console
+  //   console.error(errors)
+  // }
 
   const useFunctionInput = () => {
-  
     return {
       required: 'Это обязательное поле',
       min: {
@@ -73,12 +71,21 @@ const IndexPage = () => {
     }
   }
 
+//   const getDNF = (): string => {
+//     if (currentCount.id === '3') {
+// return ''
+//     } else {
+
+// return ''
+//     }
+//   }
+
   const functionInputRules = useFunctionInput()
 
   return (
     <ContentContainer>
       <SC.ContentWrapper>
-        <SC.ColumnWrapper>
+        <SC.BlockWrapper>
           <SC.PopupWrapper>
             <SC.PopupLabel>Выберите количество переменных</SC.PopupLabel>
             <DropdownMenu
@@ -99,32 +106,46 @@ const IndexPage = () => {
                 values={defaultValues[currentCount.id][item]}
               />
             ))}
-            <form onSubmit={handleSubmit(onSubmit, onError)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <SC.InputsWrapper>
                 <div className={'table-title'}>F(0 или 1)</div>
                 {Array(inputsCount[currentCount.id])
                   .fill(0)
                   .map((item, index) => (
                     <SC.Input
+                      placeholder="0 или 1"
+                      // defaultValue={0}
                       key={Math.random()}
-                      // hasError={Object.keys(errors).includes(`fieldBy${currentCount.id}-${index + 1}`)}
-                      {...register(`fieldBy${currentCount.id}-${index + 1}`, functionInputRules)}
+                      {...register(
+                        `fieldBy${currentCount.id}-${index + 1}`,
+                        functionInputRules
+                      )}
                     />
                   ))}
               </SC.InputsWrapper>
               <SC.Button>Нарисовать карту карно</SC.Button>
-              {/* {Object.keys(errors).length > 0
-               && <SC.Span>{'Проверьте, что все поля заполнены и входят в диапазон от 0 до 1'}</SC.Span>} */}
             </form>
           </SC.RowWrapper>
-        </SC.ColumnWrapper>
+        </SC.BlockWrapper>
 
-        <SC.ColumnWrapper>
+        <SC.BlockWrapper>
           <KarnoCardsField
             currentCount={currentCount.id}
             fieldValues={formData}
           />
-        </SC.ColumnWrapper>
+        </SC.BlockWrapper>
+
+        <SC.BlockWrapper>
+          <KarnoCardsFieldSmall
+            currentCount={currentCount.id}
+            fieldValues={formData}
+          />
+        </SC.BlockWrapper>
+
+        <SC.BlockWrapper>
+          <h3>Сокращенная ДНФ</h3>
+          {/* <h4>f = </h4> */}
+        </SC.BlockWrapper>
       </SC.ContentWrapper>
     </ContentContainer>
   )

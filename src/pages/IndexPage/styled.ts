@@ -17,9 +17,12 @@ export const RowWrapper = styled.div`
   flex-direction: row;
 `
 
-export const ColumnWrapper = styled.div`
+export const BlockWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
 
   margin-top: 10vh;
 `
@@ -31,10 +34,11 @@ export const InputsWrapper = styled.div`
   align-items: center;
 `
 export const Input = styled.input<{hasError?: boolean}>`
-  width: 30px;
+  width: 80px;
   height: 30px;
   margin-bottom: 10px;
   box-sizing: border-box;
+  text-align: center;
 
   border-color: ${props => props.hasError && 'red'}
 `
@@ -47,9 +51,9 @@ export const Square = styled.div<{ isOverlined?: boolean }>`
 `
 
 export const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-
+  display: grid;
+  /* flex-direction: row; */
+  grid-template-columns: repeat(2, 1fr);
   /* align-items: center; */
   justify-content: space-between;
 `
