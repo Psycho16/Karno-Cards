@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Karno-Cards/static/css/main.04641a52.css",
-    "main.js": "/Karno-Cards/static/js/main.0bf7aa4e.js",
+    "main.js": "/Karno-Cards/static/js/main.08cc2554.js",
     "static/js/787.64059d29.chunk.js": "/Karno-Cards/static/js/787.64059d29.chunk.js",
     "index.html": "/Karno-Cards/index.html",
     "static/media/arrow.svg": "/Karno-Cards/static/media/arrow.2f267803983650011a3e2659092b91b5.svg",
     "main.04641a52.css.map": "/Karno-Cards/static/css/main.04641a52.css.map",
-    "main.0bf7aa4e.js.map": "/Karno-Cards/static/js/main.0bf7aa4e.js.map",
+    "main.08cc2554.js.map": "/Karno-Cards/static/js/main.08cc2554.js.map",
     "787.64059d29.chunk.js.map": "/Karno-Cards/static/js/787.64059d29.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.04641a52.css",
-    "static/js/main.0bf7aa4e.js"
+    "static/js/main.08cc2554.js"
   ]
 }
