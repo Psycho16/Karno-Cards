@@ -143,7 +143,7 @@ const IndexPage = () => {
         </SC.BlockWrapper>
 
         <SC.BlockWrapper>
-          <h3>Сокращенная ДНФ</h3>
+          {/* <h3>Сокращенная ДНФ</h3> */}
           {/* <h4>f = </h4> */}
         </SC.BlockWrapper>
       </SC.ContentWrapper>
